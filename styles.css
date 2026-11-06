@@ -631,3 +631,20 @@ strong { font-weight: 600; color: #fff; }
             mask-image: linear-gradient(90deg, transparent, #000 25%, #000 75%, transparent), linear-gradient(transparent, #000 40%);
   }
 }
+
+/* Phones: the whole portrait art fits the screen shape, so show it intact
+   and hide the desktop pieces. */
+.art--full { display: none; }
+@media (max-width: 700px) {
+  .art--dragon, .art--enso, .art--torii { display: none; }
+  .art--full {
+    display: block; inset: 0; mix-blend-mode: normal;
+    background: url("assets/bg.jpg") center top / cover no-repeat;
+  }
+  .art--full-bottom {
+    top: auto; height: min(100%, 150vw);
+    background-position: center bottom;
+    -webkit-mask-image: linear-gradient(transparent, #000 45%);
+            mask-image: linear-gradient(transparent, #000 45%);
+  }
+}
