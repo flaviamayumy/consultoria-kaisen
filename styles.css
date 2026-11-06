@@ -571,41 +571,79 @@ strong { font-weight: 600; color: #fff; }
   .hero .eyebrow--lines::before, .hero .eyebrow--lines::after { width: 28px; }
 }
 
-/* ---------- shared background art (assets/bg.jpg, 1024x1536) ----------
-   The portrait art is shown close to native size in the centre; a blurred,
-   darkened copy fills the sides so it never has to be upscaled to full width. */
-.bg-blur, .bg-art { position: absolute; z-index: -1; pointer-events: none; }
-.bg-blur {
-  inset: -60px;
-  background: url("assets/bg.jpg") center / cover no-repeat;
-  filter: blur(40px) brightness(.45) saturate(1.2);
+/* ---------- background art (pieces cut from the key art) ----------
+   Each piece is shown at or below its native size and blended with "screen",
+   so its black backdrop disappears and nothing is stretched on wide screens. */
+.hero, .final { background: var(--bg); }
+.hero::before, .final::before {
+  /* full-width ember glow so wide screens never look empty */
+  content: ""; position: absolute; inset: 0; z-index: -3; pointer-events: none;
+  background:
+    radial-gradient(ellipse 60% 45% at 50% 100%, rgba(170,18,28,.42), transparent 70%),
+    radial-gradient(ellipse 35% 30% at 0% 100%, rgba(120,10,18,.35), transparent 70%),
+    radial-gradient(ellipse 35% 30% at 100% 100%, rgba(120,10,18,.35), transparent 70%);
 }
-.bg-art {
-  top: 0; bottom: 0; left: 50%; translate: -50% 0;
-  height: 100%; aspect-ratio: 2 / 3; max-height: 1536px;
-  background: url("assets/bg.jpg") center top / cover no-repeat;
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 16%, #000 84%, transparent);
-          mask-image: linear-gradient(90deg, transparent, #000 16%, #000 84%, transparent);
+.art {
+  position: absolute; z-index: -1; pointer-events: none;
+  background-repeat: no-repeat; background-size: 100% 100%;
+  mix-blend-mode: screen;
 }
-.hero::after {
-  content: ""; position: absolute; inset: auto 0 0 0; height: 120px; z-index: -1;
-  background: linear-gradient(transparent, var(--bg));
+.art--dragon {
+  z-index: -2; top: 0; right: max(-4%, calc(50% - 820px));
+  width: min(664px, 60vw); aspect-ratio: 664 / 620;
+  background-image: url("assets/dragon.jpg");
+  -webkit-mask-image: radial-gradient(ellipse 60% 60% at 55% 45%, #000 45%, transparent 100%);
+          mask-image: radial-gradient(ellipse 60% 60% at 55% 45%, #000 45%, transparent 100%);
+  opacity: .9;
+  animation: drift 18s ease-in-out infinite alternate;
 }
-.hero { background: var(--bg); }
-.bg-art--bottom {
-  top: auto; bottom: 0; height: min(100%, 1400px);
-  background-position: center bottom;
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 16%, #000 84%, transparent), linear-gradient(transparent, #000 45%);
-          mask-image: linear-gradient(90deg, transparent, #000 16%, #000 84%, transparent), linear-gradient(transparent, #000 45%);
+@keyframes drift { to { transform: translate(-1.5%, 1.5%); } }
+.art--enso {
+  top: 50%; left: 50%; translate: calc(-50% - 230px) -58%;
+  height: min(620px, 70vh); aspect-ratio: 290 / 640;
+  background-image: url("assets/enso.jpg");
+  -webkit-mask-image: radial-gradient(ellipse 55% 50% at 50% 50%, #000 60%, transparent 100%);
+          mask-image: radial-gradient(ellipse 55% 50% at 50% 50%, #000 60%, transparent 100%);
+  opacity: .85;
+}
+.art--torii {
+  bottom: 0; left: 50%; translate: -50% 0;
+  width: min(1180px, 100%); aspect-ratio: 1024 / 576;
+  background-image: url("assets/torii.jpg");
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 22%, #000 78%, transparent), linear-gradient(transparent, #000 35%);
+          mask-image: linear-gradient(90deg, transparent, #000 22%, #000 78%, transparent), linear-gradient(transparent, #000 35%);
   -webkit-mask-composite: source-in;
           mask-composite: intersect;
 }
-.final { background: var(--bg); }
-.final .bg-blur { top: 30%; -webkit-mask-image: linear-gradient(transparent, #000 50%); mask-image: linear-gradient(transparent, #000 50%); }
-.hero__content { text-shadow: 0 2px 24px rgba(0,0,0,.6); }
-@media (max-width: 600px) {
-  .bg-art { -webkit-mask-image: none; mask-image: none; }
-  .bg-art--bottom {
+.hero .art--torii { height: 50%; width: auto; max-width: none; }
+.hero::after {
+  content: ""; position: absolute; inset: auto 0 0 0; height: 90px; z-index: -1;
+  background: linear-gradient(transparent, var(--bg));
+}
+.hero__content { text-shadow: 0 2px 24px rgba(0,0,0,.7); }
+@media (max-width: 700px) {
+  .art--dragon { width: 120vw; right: -35%; top: 30px; opacity: .65; }
+  .art--enso { height: 440px; translate: calc(-50% - 120px) -62%; opacity: .6; }
+  .hero .art--torii { width: 190vw; max-height: none; height: auto; }
+  .final .art--torii { width: 190vw; }
+  .art--torii {
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 25%, #000 75%, transparent), linear-gradient(transparent, #000 40%);
+            mask-image: linear-gradient(90deg, transparent, #000 25%, #000 75%, transparent), linear-gradient(transparent, #000 40%);
+  }
+}
+
+/* Phones: the whole portrait art fits the screen shape, so show it intact
+   and hide the desktop pieces. */
+.art--full { display: none; }
+@media (max-width: 700px) {
+  .art--dragon, .art--enso, .art--torii { display: none; }
+  .art--full {
+    display: block; inset: 0; mix-blend-mode: normal;
+    background: url("assets/bg.jpg") center top / cover no-repeat;
+  }
+  .art--full-bottom {
+    top: auto; height: min(100%, 150vw);
+    background-position: center bottom;
     -webkit-mask-image: linear-gradient(transparent, #000 45%);
             mask-image: linear-gradient(transparent, #000 45%);
   }
