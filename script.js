@@ -62,3 +62,25 @@
 
   document.getElementById('year').textContent = new Date().getFullYear();
 })();
+
+// Princípios: janelas de detalhe
+(() => {
+  const openDlg = (dlg) => {
+    if (typeof dlg.showModal !== 'function') return;
+    dlg.showModal();
+    document.body.classList.add('dlg-open');
+    const panel = dlg.querySelector('.pdlg__panel');
+    if (panel) panel.scrollTop = 0;
+  };
+  document.querySelectorAll('[data-dialog]').forEach((btn) => {
+    const dlg = document.getElementById(btn.dataset.dialog);
+    if (!dlg) return;
+    btn.addEventListener('click', () => openDlg(dlg));
+  });
+  document.querySelectorAll('dialog.pdlg').forEach((dlg) => {
+    dlg.addEventListener('close', () => document.body.classList.remove('dlg-open'));
+    dlg.querySelectorAll('[data-close]').forEach((b) => b.addEventListener('click', () => dlg.close()));
+    // fechar ao clicar fora do painel
+    dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+  });
+})();

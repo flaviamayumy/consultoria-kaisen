@@ -155,7 +155,13 @@
             <div class="card__badge"><svg><use href="#torii"/></svg></div>
             <h3>Princípios Kaisen</h3>
             <ul>
-              <li><span class="ring"><svg><use href="#torii"/></svg></span>Disciplina diária</li>
+              <li class="principle--link">
+                <button type="button" class="principle__btn" data-dialog="dlg-disciplina" aria-haspopup="dialog">
+                  <span class="ring"><svg><use href="#torii"/></svg></span>
+                  <span class="principle__label">Disciplina diária<small>Saiba mais</small></span>
+                  <svg class="principle__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </button>
+              </li>
               <li><span class="ring"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 20h18M6 16v4M11 12v8M16 8v12M4 11l6-5 4 3 6-6M15 3h5v5"/></svg></span>Evolução gradual</li>
               <li><span class="ring ring--kanji">改</span>Constância acima da perfeição</li>
               <li><span class="ring"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4a4 4 0 0 0-7 3 4 4 0 0 0-1 7 4 4 0 0 0 4 5 3 3 0 0 0 4 1V4zM12 4a4 4 0 0 1 7 3 4 4 0 0 1 1 7 4 4 0 0 1-4 5 3 3 0 0 1-4 1"/></svg></span>Corpo e mente alinhados</li>
@@ -332,6 +338,49 @@
       </div>
     </section>
   </main>
+
+  <!-- PRINCÍPIOS: janelas de detalhe -->
+  <dialog class="pdlg" id="dlg-disciplina" aria-labelledby="dlg-disciplina-title">
+    <div class="pdlg__panel">
+      <button type="button" class="pdlg__close" data-close aria-label="Fechar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <figure class="pdlg__hero">
+        <img src="assets/torii.jpg" alt="Escadaria de pedra subindo até um portal torii sob um céu vermelho" width="1024" height="576" loading="lazy">
+        <span class="pdlg__kanji" aria-hidden="true">改</span>
+      </figure>
+      <div class="pdlg__body">
+        <p class="pdlg__eyebrow">Princípio Kaisen</p>
+        <h3 class="pdlg__title" id="dlg-disciplina-title">Disciplina diária</h3>
+        <p class="pdlg__sub">O primeiro passo de toda evolução</p>
+
+        <p class="pdlg__lead">Disciplina não é rigidez, nem fazer tudo perfeito. É a decisão de <em>aparecer todos os dias</em>, mesmo quando a motivação não aparece.</p>
+        <p>Na metodologia Kaisen, a disciplina é construída aos poucos, como um músculo. Começamos com compromissos pequenos e possíveis dentro da sua rotina. Pode ser um treino de 30 minutos, uma refeição planejada ou uma noite bem dormida. Cada compromisso cumprido fortalece a confiança em si mesmo e abre espaço para o próximo.</p>
+
+        <figure class="pdlg__week" aria-label="Exemplo de semana: seis dias cumpridos e um dia difícil, seguido da volta ao caminho">
+          <ol aria-hidden="true">
+            <li class="ok"><span>Seg</span><i></i></li>
+            <li class="ok"><span>Ter</span><i></i></li>
+            <li class="miss"><span>Qua</span><i></i></li>
+            <li class="ok back"><span>Qui</span><i></i></li>
+            <li class="ok"><span>Sex</span><i></i></li>
+            <li class="ok"><span>Sáb</span><i></i></li>
+            <li class="ok"><span>Dom</span><i></i></li>
+          </ol>
+          <figcaption>Um dia difícil não apaga a semana. O que importa é <em>voltar no dia seguinte</em>.</figcaption>
+        </figure>
+
+        <p>Disciplina também não é se cobrar sem descanso. Dias difíceis vão existir. A diferença está em não deixar que um dia ruim vire uma semana perdida. Errou? Volte no próximo treino, na próxima refeição, na próxima escolha.</p>
+        <p>O Samurai não treinava só quando tinha vontade. Treinava porque aquilo fazia parte de quem ele era. É isso que buscamos com você: que o cuidado com o corpo e a mente deixe de ser esforço e se torne parte da sua <strong>identidade</strong>.</p>
+
+        <blockquote class="pdlg__quote">Motivação te faz começar. <em>Disciplina te faz continuar.</em></blockquote>
+
+        <a class="btn btn--red btn--block" target="_blank" rel="noopener" href="https://wa.me/5514998508571?text=Ol%C3%A1%20Fl%C3%A1via!%20Li%20sobre%20a%20disciplina%20di%C3%A1ria%20no%20site%20e%20quero%20come%C3%A7ar%20minha%20jornada%20na%20Consultoria%20Kaisen.">
+          <svg class="i"><use href="#whatsapp"/></svg> Começar jornada
+        </a>
+      </div>
+    </div>
+  </dialog>
 
   <footer class="footer">
     <p class="footer__motto">Corpo e mente alinhados para a sua <em>evolução</em>.</p>
