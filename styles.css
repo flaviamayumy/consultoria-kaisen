@@ -818,3 +818,16 @@ body.dlg-open { overflow: hidden; }
   .pdlg__compare { grid-template-columns: 1fr; }
   .pdlg__dots { gap: 4px; }
 }
+
+/* botão flutuante com texto */
+.wa-float {
+  width: auto; height: 54px; padding: 0 1.3rem 0 1.05rem; gap: .55rem;
+  display: inline-flex; align-items: center; border-radius: 99px; transform-origin: right center;
+}
+.wa-float::before { border-radius: 99px; }
+.wa-float svg { width: 26px; height: 26px; }
+.wa-float__label {
+  font-family: var(--cond); font-weight: 500; text-transform: uppercase;
+  letter-spacing: .12em; font-size: .9rem; white-space: nowrap;
+}
+@keyframes pulse { from { transform: scale(1); opacity: .8; } to { transform: scale(1.18, 1.45); opacity: 0; } }
