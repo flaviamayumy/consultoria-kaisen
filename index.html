@@ -162,10 +162,34 @@
                   <svg class="principle__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
                 </button>
               </li>
-              <li><span class="ring"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 20h18M6 16v4M11 12v8M16 8v12M4 11l6-5 4 3 6-6M15 3h5v5"/></svg></span>Evolução gradual</li>
-              <li><span class="ring ring--kanji">改</span>Constância acima da perfeição</li>
-              <li><span class="ring"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4a4 4 0 0 0-7 3 4 4 0 0 0-1 7 4 4 0 0 0 4 5 3 3 0 0 0 4 1V4zM12 4a4 4 0 0 1 7 3 4 4 0 0 1 1 7 4 4 0 0 1-4 5 3 3 0 0 1-4 1"/></svg></span>Corpo e mente alinhados</li>
-              <li><span class="ring"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20c-3-2-4-5-4-8s1.5-6 4-8c2.5 2 4 5 4 8s-1 6-4 8zM12 20c-4 0-8-2-9-7 3 0 5 1 6.5 2.5M12 20c4 0 8-2 9-7-3 0-5 1-6.5 2.5"/></svg></span>Processo sustentável</li>
+              <li class="principle--link">
+                <button type="button" class="principle__btn" data-dialog="dlg-evolucao" aria-haspopup="dialog">
+                  <span class="ring"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 20h18M6 16v4M11 12v8M16 8v12M4 11l6-5 4 3 6-6M15 3h5v5"/></svg></span>
+                  <span class="principle__label">Evolução gradual<small>Saiba mais</small></span>
+                  <svg class="principle__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </button>
+              </li>
+              <li class="principle--link">
+                <button type="button" class="principle__btn" data-dialog="dlg-constancia" aria-haspopup="dialog">
+                  <span class="ring ring--kanji">改</span>
+                  <span class="principle__label">Constância acima da perfeição<small>Saiba mais</small></span>
+                  <svg class="principle__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </button>
+              </li>
+              <li class="principle--link">
+                <button type="button" class="principle__btn" data-dialog="dlg-corpo-mente" aria-haspopup="dialog">
+                  <span class="ring"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4a4 4 0 0 0-7 3 4 4 0 0 0-1 7 4 4 0 0 0 4 5 3 3 0 0 0 4 1V4zM12 4a4 4 0 0 1 7 3 4 4 0 0 1 1 7 4 4 0 0 1-4 5 3 3 0 0 1-4 1"/></svg></span>
+                  <span class="principle__label">Corpo e mente alinhados<small>Saiba mais</small></span>
+                  <svg class="principle__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </button>
+              </li>
+              <li class="principle--link">
+                <button type="button" class="principle__btn" data-dialog="dlg-processo" aria-haspopup="dialog">
+                  <span class="ring"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20c-3-2-4-5-4-8s1.5-6 4-8c2.5 2 4 5 4 8s-1 6-4 8zM12 20c-4 0-8-2-9-7 3 0 5 1 6.5 2.5M12 20c4 0 8-2 9-7-3 0-5 1-6.5 2.5"/></svg></span>
+                  <span class="principle__label">Processo sustentável<small>Saiba mais</small></span>
+                  <svg class="principle__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </button>
+              </li>
             </ul>
           </div>
         </aside>
@@ -376,6 +400,183 @@
         <blockquote class="pdlg__quote">Motivação te faz começar. <em>Disciplina te faz continuar.</em></blockquote>
 
         <a class="btn btn--red btn--block" target="_blank" rel="noopener" href="https://wa.me/5514998508571?text=Ol%C3%A1%20Fl%C3%A1via!%20Li%20sobre%20a%20disciplina%20di%C3%A1ria%20no%20site%20e%20quero%20come%C3%A7ar%20minha%20jornada%20na%20Consultoria%20Kaisen.">
+          <svg class="i"><use href="#whatsapp"/></svg> Começar jornada
+        </a>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="pdlg" id="dlg-evolucao" aria-labelledby="dlg-evolucao-title">
+    <div class="pdlg__panel">
+      <button type="button" class="pdlg__close" data-close aria-label="Fechar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <figure class="pdlg__hero pdlg__hero--lift">
+        <img src="assets/dragon.jpg" alt="Ilustração de um dragão japonês em tons escuros" loading="lazy" style="object-position:center 35%">
+        <span class="pdlg__kanji" aria-hidden="true">進</span>
+      </figure>
+      <div class="pdlg__body">
+        <p class="pdlg__eyebrow">Princípio Kaisen</p>
+        <h3 class="pdlg__title" id="dlg-evolucao-title">Evolução gradual</h3>
+        <p class="pdlg__sub">Um degrau de cada vez</p>
+
+        <p class="pdlg__lead">Resultados de verdade não aparecem da noite para o dia. Eles são construídos <em>degrau por degrau</em>, e cada degrau prepara você para o próximo.</p>
+        <p>Na Kaisen, ninguém começa do mesmo ponto. O plano parte de onde você está hoje, com o seu condicionamento, a sua rotina e o seu momento de vida. A partir daí, aumentamos a carga, o volume e os desafios aos poucos, no ritmo em que o seu corpo consegue se adaptar e responder.</p>
+
+        <figure class="pdlg__fig" aria-label="Gráfico comparando a mudança radical, que sobe e despenca várias vezes, com a evolução gradual, que sobe de forma contínua">
+          <svg class="pdlg__chart" viewBox="0 0 320 170" aria-hidden="true">
+            <line x1="20" y1="145" x2="305" y2="145" stroke="rgba(255,255,255,.18)"/>
+            <line x1="20" y1="20" x2="20" y2="145" stroke="rgba(255,255,255,.18)"/>
+            <polyline points="20,135 55,55 90,130 125,62 160,138 195,70 230,140 265,75 300,138" fill="none" stroke="#7d7774" stroke-width="2" stroke-dasharray="5 5" stroke-linejoin="round"/>
+            <path d="M20 135 C 90 128, 170 100, 300 28" fill="none" stroke="#d4202c" stroke-width="3.5" stroke-linecap="round"/>
+            <circle cx="300" cy="28" r="5" fill="#d4202c"/>
+            <text x="300" y="16" text-anchor="end" fill="#ff4a55" font-size="12" font-family="Oswald, sans-serif" letter-spacing="1">EVOLUÇÃO GRADUAL</text>
+            <text x="300" y="160" text-anchor="end" fill="#8f8a86" font-size="11" font-family="Oswald, sans-serif" letter-spacing="1">MUDANÇA RADICAL (EFEITO SANFONA)</text>
+          </svg>
+          <figcaption>Quem tenta mudar tudo de uma vez costuma ir e voltar. Quem evolui aos poucos <em>não volta para trás</em>.</figcaption>
+        </figure>
+
+        <p>Mudanças bruscas assustam o corpo e cansam a mente. Dietas extremas e treinos exaustivos até funcionam por algumas semanas, mas raramente se sustentam. A evolução gradual é mais segura, reduz o risco de lesões e cria uma base sólida para os resultados durarem.</p>
+        <p>Pequenos ajustes parecem pouco no dia a dia. Somados ao longo de meses, transformam o corpo, o desempenho e a forma como você se enxerga. É o espírito do Kaisen: <strong>1% melhor por dia</strong>.</p>
+
+        <blockquote class="pdlg__quote">Não é sobre o tamanho do passo. <em>É sobre nunca parar de caminhar.</em></blockquote>
+
+        <a class="btn btn--red btn--block" target="_blank" rel="noopener" href="https://wa.me/5514998508571?text=Ol%C3%A1%20Fl%C3%A1via%21%20Li%20sobre%20a%20evolu%C3%A7%C3%A3o%20gradual%20no%20site%20e%20quero%20come%C3%A7ar%20minha%20jornada%20na%20Consultoria%20Kaisen.">
+          <svg class="i"><use href="#whatsapp"/></svg> Começar jornada
+        </a>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="pdlg" id="dlg-constancia" aria-labelledby="dlg-constancia-title">
+    <div class="pdlg__panel">
+      <button type="button" class="pdlg__close" data-close aria-label="Fechar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <figure class="pdlg__hero ">
+        <img src="assets/enso.jpg" alt="Pincelada vermelha em forma de círculo, o ensō japonês" loading="lazy" style="object-position:center 45%">
+        <span class="pdlg__kanji" aria-hidden="true">継</span>
+      </figure>
+      <div class="pdlg__body">
+        <p class="pdlg__eyebrow">Princípio Kaisen</p>
+        <h3 class="pdlg__title" id="dlg-constancia-title">Constância acima da perfeição</h3>
+        <p class="pdlg__sub">Feito é melhor que perfeito</p>
+
+        <p class="pdlg__lead">A busca pela perfeição é uma das maiores armadilhas de quem quer mudar. Quem espera o momento ideal, a dieta perfeita ou a semana sem imprevistos <em>acaba não começando</em>, ou desiste no primeiro deslize.</p>
+        <p>Na Kaisen, o que vale é a constância. Um treino mais curto num dia corrido ainda é um treino. Uma refeição fora do plano não anula todas as outras. O resultado vem daquilo que você faz na maior parte do tempo, e não do que acontece num dia isolado.</p>
+
+        <figure class="pdlg__fig" aria-label="Comparação de um mês: tentando ser perfeito, 7 dias de treino e depois desistência; sendo constante, 24 dias de treino com algumas falhas no caminho">
+          <div class="pdlg__month" aria-hidden="true">
+            <div class="pdlg__month-row">
+              <p><span>Tentando ser perfeito</span><b class="dim">7 de 30 dias</b></p>
+              <div class="pdlg__dots"><i class="ok"></i><i class="ok"></i><i class="ok"></i><i class="ok"></i><i class="ok"></i><i class="ok"></i><i class="ok"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i></div>
+            </div>
+            <div class="pdlg__month-row">
+              <p><span>Sendo constante</span><b>24 de 30 dias</b></p>
+              <div class="pdlg__dots"><i class="ok"></i><i class="ok"></i><i class="ok"></i><i class="off"></i><i class="ok"></i><i class="ok"></i><i class="ok"></i><i class="ok"></i><i class="off"></i><i class="ok"></i><i class="ok"></i><i class="ok"></i><i class="off"></i><i class="ok"></i><i class="ok"></i><i class="ok"></i><i class="off"></i><i class="ok"></i><i class="ok"></i><i class="ok"></i><i class="ok"></i><i class="off"></i><i class="ok"></i><i class="ok"></i><i class="ok"></i><i class="ok"></i><i class="ok"></i><i class="off"></i><i class="ok"></i><i class="ok"></i></div>
+            </div>
+          </div>
+          <figcaption>Uma semana perfeita seguida de desistência rende menos do que <em>um mês imperfeito, mas contínuo</em>.</figcaption>
+        </figure>
+
+        <p>Na cultura japonesa, o ensō, o círculo pintado com uma única pincelada, quase nunca fica perfeito. E é justamente aí que está a sua beleza: ele mostra o gesto feito com presença, e não a ausência de falhas.</p>
+        <p>Por isso, o seu plano é pensado para caber na vida real, com espaço para imprevistos, cansaço e dias difíceis. Quando algo sai do roteiro, a gente ajusta e segue em frente, sem culpa e sem recomeçar do zero.</p>
+
+        <blockquote class="pdlg__quote">Não espere estar perfeito para começar. <em>Comece, e o progresso vem.</em></blockquote>
+
+        <a class="btn btn--red btn--block" target="_blank" rel="noopener" href="https://wa.me/5514998508571?text=Ol%C3%A1%20Fl%C3%A1via%21%20Li%20sobre%20const%C3%A2ncia%20acima%20da%20perfei%C3%A7%C3%A3o%20no%20site%20e%20quero%20come%C3%A7ar%20minha%20jornada%20na%20Consultoria%20Kaisen.">
+          <svg class="i"><use href="#whatsapp"/></svg> Começar jornada
+        </a>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="pdlg" id="dlg-corpo-mente" aria-labelledby="dlg-corpo-mente-title">
+    <div class="pdlg__panel">
+      <button type="button" class="pdlg__close" data-close aria-label="Fechar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <figure class="pdlg__hero ">
+        <img src="assets/bg.jpg" alt="Ilustração de um ensō vermelho ao lado de um dragão japonês" loading="lazy" style="object-position:center 8%">
+        <span class="pdlg__kanji" aria-hidden="true">心</span>
+      </figure>
+      <div class="pdlg__body">
+        <p class="pdlg__eyebrow">Princípio Kaisen</p>
+        <h3 class="pdlg__title" id="dlg-corpo-mente-title">Corpo e mente alinhados</h3>
+        <p class="pdlg__sub">Uma coisa só, não duas</p>
+
+        <p class="pdlg__lead">Não existe transformação física duradoura sem cuidar da mente, e o contrário também é verdade. Corpo e mente <em>conversam o tempo todo</em>.</p>
+        <p>Uma noite mal dormida derruba o rendimento no treino. O estresse aumenta a fome e a vontade de desistir. E um corpo que se sente mais forte devolve confiança, disposição e bem-estar para todas as áreas da vida.</p>
+
+        <figure class="pdlg__fig" aria-label="Os quatro pilares trabalhados juntos: treino, alimentação, sono e descanso, e mente">
+          <ul class="pdlg__pillars">
+            <li><span class="pdlg__pillar-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 7v10M3 9v6M18 7v10M21 9v6M6 12h12"/></svg></span><strong>Treino</strong><span>Força, condicionamento e movimento</span></li>
+            <li><span class="pdlg__pillar-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18a9 9 0 0 1-18 0zM8 21h8M9 8c0-2 2-2 2-4M13 8c0-2 2-2 2-4"/></svg></span><strong>Alimentação</strong><span>Energia e nutrientes para evoluir</span></li>
+            <li><span class="pdlg__pillar-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg></span><strong>Sono e descanso</strong><span>Onde o corpo se recupera e cresce</span></li>
+            <li><span class="pdlg__pillar-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4a4 4 0 0 0-7 3 4 4 0 0 0-1 7 4 4 0 0 0 4 5 3 3 0 0 0 4 1V4zM12 4a4 4 0 0 1 7 3 4 4 0 0 1 1 7 4 4 0 0 1-4 5 3 3 0 0 1-4 1"/></svg></span><strong>Mente</strong><span>Foco, motivação e autoestima</span></li>
+          </ul>
+          <figcaption>Os quatro pilares andam juntos. Quando um enfraquece, <em>os outros sentem</em>.</figcaption>
+        </figure>
+
+        <p>Por isso, o acompanhamento na Kaisen vai além da planilha de treino e do plano alimentar. Conversamos sobre a sua rotina, o seu sono, o seu nível de estresse e como você está se sentindo, e ajustamos o plano quando a vida pede.</p>
+        <p>O objetivo é que o treino seja um espaço de cuidado, e não mais uma cobrança. Que você se sinta bem no próprio corpo e confiante em quem está se tornando, respeitando a sua história, o seu tempo e a sua identidade.</p>
+
+        <blockquote class="pdlg__quote">Um corpo forte começa com <em>uma mente em paz com o processo.</em></blockquote>
+
+        <a class="btn btn--red btn--block" target="_blank" rel="noopener" href="https://wa.me/5514998508571?text=Ol%C3%A1%20Fl%C3%A1via%21%20Li%20sobre%20corpo%20e%20mente%20alinhados%20no%20site%20e%20quero%20come%C3%A7ar%20minha%20jornada%20na%20Consultoria%20Kaisen.">
+          <svg class="i"><use href="#whatsapp"/></svg> Começar jornada
+        </a>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="pdlg" id="dlg-processo" aria-labelledby="dlg-processo-title">
+    <div class="pdlg__panel">
+      <button type="button" class="pdlg__close" data-close aria-label="Fechar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <figure class="pdlg__hero ">
+        <img src="assets/bg.jpg" alt="Montanhas e escadaria levando a um portal torii sob nuvens vermelhas" loading="lazy" style="object-position:center 88%">
+        <span class="pdlg__kanji" aria-hidden="true">道</span>
+      </figure>
+      <div class="pdlg__body">
+        <p class="pdlg__eyebrow">Princípio Kaisen</p>
+        <h3 class="pdlg__title" id="dlg-processo-title">Processo sustentável</h3>
+        <p class="pdlg__sub">Resultados que ficam</p>
+
+        <p class="pdlg__lead">Qualquer pessoa consegue fazer um sacrifício enorme por algumas semanas. O desafio é <em>manter os resultados</em> por meses e anos.</p>
+        <p>Na Kaisen, o objetivo não é só chegar lá. É continuar lá. Por isso, nada de estratégias extremas, que trazem resultados rápidos e vão embora com a mesma velocidade. O plano é construído para caber na sua vida, com treinos possíveis e uma alimentação que você consegue manter sem sofrimento.</p>
+
+        <figure class="pdlg__fig" aria-label="Comparação entre o que não se sustenta e o que é sustentável">
+          <div class="pdlg__compare">
+            <div class="pdlg__col pdlg__col--no">
+              <p>Não se sustenta</p>
+              <ul>
+                <li>Dietas que cortam tudo o que você gosta</li>
+                <li>Treinos exaustivos todos os dias</li>
+                <li>Metas impossíveis em pouco tempo</li>
+                <li>Culpa a cada deslize</li>
+              </ul>
+            </div>
+            <div class="pdlg__col pdlg__col--yes">
+              <p>Sustentável</p>
+              <ul>
+                <li>Alimentação equilibrada, com prazer</li>
+                <li>Treinos que cabem na sua rotina</li>
+                <li>Metas claras e alcançáveis</li>
+                <li>Ajustes sem culpa quando preciso</li>
+              </ul>
+            </div>
+          </div>
+          <figcaption>Se não dá para manter por anos, <em>não é o caminho certo para você</em>.</figcaption>
+        </figure>
+
+        <p>Um processo sustentável respeita os seus limites, o seu tempo de recuperação e a sua rotina. Ele se adapta quando a vida muda: uma viagem, uma fase mais corrida no trabalho, um período de menos energia. O plano se ajusta, e você segue no caminho.</p>
+        <p>Com o tempo, os novos hábitos deixam de exigir esforço e passam a ser naturais. Esse é o verdadeiro resultado: não um número numa data, mas <strong>um estilo de vida que você escolheu e consegue manter</strong>.</p>
+
+        <blockquote class="pdlg__quote">O melhor plano não é o mais intenso. <em>É o que você consegue seguir.</em></blockquote>
+
+        <a class="btn btn--red btn--block" target="_blank" rel="noopener" href="https://wa.me/5514998508571?text=Ol%C3%A1%20Fl%C3%A1via%21%20Li%20sobre%20o%20processo%20sustent%C3%A1vel%20no%20site%20e%20quero%20come%C3%A7ar%20minha%20jornada%20na%20Consultoria%20Kaisen.">
           <svg class="i"><use href="#whatsapp"/></svg> Começar jornada
         </a>
       </div>
