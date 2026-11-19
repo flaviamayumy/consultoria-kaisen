@@ -1017,3 +1017,10 @@ body.dlg-open { overflow: hidden; }
 @media (min-width: 901px) and (max-width: 1120px) { .nav__links { gap: 1.3rem; } .nav__links a:not(.btn) { font-size: .8rem; } }
 /* títulos longos (ex.: FISICULTURISMO) cabem na tela do celular */
 @media (max-width: 480px) { .title strong { font-size: min(3.2rem, 13.5vw); } .title strong.white { letter-spacing: .04em; } }
+
+/* CREF: número nunca quebra no meio */
+.cref { white-space: nowrap; }
+.cref--line { color: #b9b3b0; }
+.cref--line::before { content: "·"; margin: 0 .55em 0 .1em; color: var(--red); }
+/* no celular, o botão flutuante do WhatsApp não cobre o rodapé */
+@media (max-width: 700px) { .footer { padding-bottom: 104px; } }
