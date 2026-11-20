@@ -1031,3 +1031,17 @@ body.dlg-open { overflow: hidden; }
 .photo--portrait { aspect-ratio: 4 / 5; width: 100%; }
 .photo--square { aspect-ratio: 1; width: 100%; }
 .intro__photo .photo { box-shadow: 0 30px 80px -30px rgba(212,32,44,.55); }
+
+/* fotos sempre inteiras, no formato original (sem cortes) */
+.photo--portrait, .photo--square { aspect-ratio: auto; }
+.photo img { height: auto; object-fit: contain; }
+.gallery { align-items: start; }
+.courses--single { grid-template-columns: 1fr; max-width: 460px; }
+/* galeria: fotos inteiras, todas na mesma altura */
+.gallery--fit { display: flex; gap: 16px; }
+.gallery--fit > div { flex: var(--r, 1) 1 0; min-width: 0; }
+@media (max-width: 700px) {
+  .gallery--fit { flex-wrap: wrap; gap: 10px; }
+  .gallery--fit > div:first-child { flex-basis: 100%; }
+  .gallery--fit > div:not(:first-child) { flex: 1 1 0; }
+}
