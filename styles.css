@@ -1045,3 +1045,5 @@ body.dlg-open { overflow: hidden; }
   .gallery--fit > div:first-child { flex-basis: 100%; }
   .gallery--fit > div:not(:first-child) { flex: 1 1 0; }
 }
+.quote--home { margin-top: 4rem; }
+.quote--home + .center-actions { margin-top: 3.4rem; }
