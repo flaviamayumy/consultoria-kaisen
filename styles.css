@@ -1071,3 +1071,26 @@ body.dlg-open { overflow: hidden; }
 /* logo horizontal no menu */
 .brand__logo { display: block; height: 64px; width: auto; }
 @media (max-width: 900px) { .brand__logo { height: 44px; } }
+
+/* A Consultoria: versão enxuta e mais visual */
+.split--short .split__main .lead { font-size: 1.35rem; line-height: 1.45; margin: 1.2rem 0 1.6rem; }
+.chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+.chips li {
+  padding: .55rem 1rem; border-radius: 99px; border: 1px solid var(--line); background: rgba(212,32,44,.07);
+  font-family: var(--cond); text-transform: uppercase; letter-spacing: .12em; font-size: .85rem; color: #eee;
+}
+.compound--big { padding: 2rem 1.8rem; }
+.compound--big .compound__bars { height: 180px; gap: 8px; }
+.compound--big .compound__label { font-size: 1rem; }
+.compound--big .compound__note { font-size: 1rem; color: #d6d1ce; }
+.fit { list-style: none; margin: 0 0 1.2rem; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.fit li {
+  display: flex; align-items: center; gap: .8rem; padding: .9rem 1rem; border-radius: 10px;
+  border: 1px solid var(--line-soft); background: linear-gradient(180deg, var(--panel), transparent);
+  font-family: var(--cond); text-transform: uppercase; letter-spacing: .08em; font-size: .95rem; color: #fff;
+}
+.fit__ic { width: 42px; height: 42px; flex: none; border-radius: 50%; display: grid; place-items: center; border: 1.5px solid var(--red); color: var(--red); }
+.fit__ic svg { width: 20px; height: 20px; }
+.hint { margin: 0; font-size: .9rem; color: var(--muted); }
+.steps--short .step p { font-size: 1rem; }
+@media (max-width: 480px) { .fit { grid-template-columns: 1fr; } }
