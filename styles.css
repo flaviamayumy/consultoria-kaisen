@@ -1047,3 +1047,23 @@ body.dlg-open { overflow: hidden; }
 }
 .quote--home { margin-top: 4rem; }
 .quote--home + .center-actions { margin-top: 3.4rem; }
+
+/* conquista no fisiculturismo */
+.champ { margin-top: 4rem; }
+.champ__badge {
+  display: flex; align-items: center; gap: 1.1rem; width: fit-content; max-width: 100%; margin: 0 auto 2rem;
+  padding: 1.1rem 1.6rem; border-radius: 12px; border: 1px solid var(--red);
+  background: linear-gradient(90deg, rgba(212,32,44,.18), rgba(212,32,44,.04));
+  box-shadow: 0 20px 60px -30px var(--red-glow);
+}
+.champ__ic { width: 56px; height: 56px; flex: none; border-radius: 50%; display: grid; place-items: center; background: var(--red); color: #fff; }
+.champ__ic svg { width: 28px; height: 28px; }
+.champ__badge b { display: block; font-family: var(--display); font-weight: 400; font-size: 2.2rem; line-height: 1; letter-spacing: .04em; color: #fff; }
+.champ__badge span:not(.champ__ic) { display: block; margin-top: .3rem; font-family: var(--cond); text-transform: uppercase; letter-spacing: .12em; font-size: .85rem; color: #d6d1ce; }
+@media (max-width: 700px) {
+  .champ .gallery--fit > div:first-child { flex: 1 1 100%; }
+  .champ .gallery--fit > div:not(:first-child) { flex: 1 1 0; }
+  .champ .gallery--fit { flex-wrap: wrap; gap: 10px; }
+  .champ__badge { padding: 1rem 1.1rem; }
+  .champ__badge b { font-size: 1.8rem; }
+}
