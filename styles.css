@@ -1123,3 +1123,10 @@ body.dlg-open { overflow: hidden; }
 .plan__wa { margin-top: .3rem; font-size: .85rem; color: var(--muted); text-decoration: underline; text-underline-offset: 3px; }
 .plan__wa:hover { color: #fff; }
 @media (max-width: 400px) { .btn--pay { letter-spacing: .05em; font-size: .85rem; padding-left: .6em; padding-right: .6em; } }
+
+/* O que acontece depois do pagamento */
+.after { margin: 4rem auto 0; max-width: 1100px; text-align: center; }
+.after__steps { margin-top: 1.6rem; text-align: left; }
+.after__note { margin: 1.4rem 0 0; color: var(--muted); font-size: .92rem; }
+.after__note a { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+.after__steps .step p strong { color: #fff; }
