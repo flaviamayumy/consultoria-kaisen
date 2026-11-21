@@ -1067,3 +1067,7 @@ body.dlg-open { overflow: hidden; }
   .champ__badge { padding: 1rem 1.1rem; }
   .champ__badge b { font-size: 1.8rem; }
 }
+
+/* logo horizontal no menu */
+.brand__logo { display: block; height: 64px; width: auto; }
+@media (max-width: 900px) { .brand__logo { height: 44px; } }
