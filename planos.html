@@ -15,7 +15,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=Noto+Serif+JP:wght@600&family=Oswald:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20261120-4">
+  <link rel="stylesheet" href="styles.css?v=20261121-1">
 </head>
 <body>
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -88,6 +88,7 @@
             <p class="plan__duration">3 meses</p>
             <div class="plan__price"><span class="plan__x">3x de</span><span class="plan__cur">R$</span><span class="plan__val">480</span><span class="plan__cents">,00</span></div>
             <p class="plan__total">Total de R$ 1.440 <span class="save">economize R$ 150</span></p>
+            <p class="plan__pix"><span class="plan__pix-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 2.8l3.6 3.6-3.6 3.6-3.6-3.6zM12 14l3.6 3.6-3.6 3.6-3.6-3.6zM2.8 12l3.6-3.6 3.6 3.6-3.6 3.6zM14 12l3.6-3.6 3.6 3.6-3.6 3.6z"/></svg></span>ou <b>R$ 1.296</b> à vista no Pix <span class="save">10% off</span></p>
             <p class="plan__desc">Para quem quer manter o foco e acelerar seus resultados.</p>
             <a class="btn btn--ghost btn--block" target="_blank" rel="noopener" href="https://wa.me/5514998508571?text=Ol%C3%A1%20Fl%C3%A1via!%20Tenho%20interesse%20no%20Plano%20Trimestral%20da%20Consultoria%20Kaisen.">Escolher trimestral</a>
           </article>
@@ -99,11 +100,34 @@
             <p class="plan__duration">6 meses</p>
             <div class="plan__price"><span class="plan__x">6x de</span><span class="plan__cur">R$</span><span class="plan__val">425</span><span class="plan__cents">,00</span></div>
             <p class="plan__total">Total de R$ 2.550 <span class="save">economize R$ 630</span></p>
+            <p class="plan__pix"><span class="plan__pix-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 2.8l3.6 3.6-3.6 3.6-3.6-3.6zM12 14l3.6 3.6-3.6 3.6-3.6-3.6zM2.8 12l3.6-3.6 3.6 3.6-3.6 3.6zM14 12l3.6-3.6 3.6 3.6-3.6 3.6z"/></svg></span>ou <b>R$ 2.295</b> à vista no Pix <span class="save">10% off</span></p>
             <p class="plan__desc">Compromisso com a transformação completa. Melhor custo-benefício.</p>
             <a class="btn btn--red btn--block" target="_blank" rel="noopener" href="https://wa.me/5514998508571?text=Ol%C3%A1%20Fl%C3%A1via!%20Tenho%20interesse%20no%20Plano%20Semestral%20da%20Consultoria%20Kaisen.">Escolher semestral</a>
           </article>
         </div>
         <p class="plans__fine reveal">Economia calculada em relação ao valor mensal do Plano Bimestral.</p>
+
+        <div class="pay reveal" id="pagamento">
+          <p class="eyebrow eyebrow--lines">Formas de pagamento</p>
+          <ul class="pay__list">
+            <li class="pay__item">
+              <span class="pay__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 2.8l3.6 3.6-3.6 3.6-3.6-3.6zM12 14l3.6 3.6-3.6 3.6-3.6-3.6zM2.8 12l3.6-3.6 3.6 3.6-3.6 3.6zM14 12l3.6-3.6 3.6 3.6-3.6 3.6z"/></svg></span>
+              <h3>Pix</h3>
+              <p>Pagamento à vista, com <strong>10% de desconto</strong> nos planos Trimestral e Semestral.</p>
+            </li>
+            <li class="pay__item">
+              <span class="pay__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="M2.5 9.5h19"/><path d="M15 15.5a2.5 2.5 0 1 0 1-2M15.6 12.4l.4 1.4 1.4-.4"/></svg></span>
+              <h3>Crédito recorrente</h3>
+              <p>O valor da parcela é cobrado mês a mês no cartão, sem comprometer o limite total.</p>
+            </li>
+            <li class="pay__item">
+              <span class="pay__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="M2.5 9.5h19M6 15h4"/></svg></span>
+              <h3>Cartão parcelado</h3>
+              <p>Parcelamento com juros, conforme as condições do Mercado Pago.</p>
+            </li>
+          </ul>
+          <p class="pay__safe"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>Pagamento seguro processado pelo Mercado Pago.</p>
+        </div>
 
         <div class="includes reveal">
           <p class="eyebrow eyebrow--lines">Todos os planos incluem</p>
@@ -198,6 +222,6 @@
     <span class="wa-float__label">Fale comigo</span>
   </a>
 
-  <script src="script.js?v=20261120-4"></script>
+  <script src="script.js?v=20261121-1"></script>
 </body>
 </html>
