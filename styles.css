@@ -1114,3 +1114,11 @@ body.dlg-open { overflow: hidden; }
 .pay__safe span { width: 16px; height: 16px; display: inline-grid; color: var(--red); }
 .pay__safe svg { width: 16px; height: 16px; }
 @media (max-width: 820px) { .pay__list { grid-template-columns: 1fr; } }
+
+/* Botões de pagamento nos planos */
+.plan__buy { display: grid; gap: 10px; width: 100%; align-self: stretch; }
+.btn--pay { width: 100%; white-space: nowrap; letter-spacing: .1em; padding-left: .8em; padding-right: .8em; display: inline-flex; align-items: center; justify-content: center; gap: .55em; }
+.btn__ic { width: 18px; height: 18px; display: inline-grid; flex: none; }
+.btn__ic svg { width: 18px; height: 18px; }
+.plan__wa { margin-top: .3rem; font-size: .85rem; color: var(--muted); text-decoration: underline; text-underline-offset: 3px; }
+.plan__wa:hover { color: #fff; }
