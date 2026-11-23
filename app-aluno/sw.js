@@ -1,7 +1,7 @@
 // Permite instalar o app e abrir rápido. Dados de login nunca são guardados aqui.
-const VERSAO = 'kaisen-login-v1';
+const VERSAO = 'kaisen-v2';
 const ARQUIVOS = [
-  './', 'index.html', 'config.js', 'manifest.webmanifest', 'css/app.css', 'js/app.js',
+  './', 'index.html', 'config.js', 'manifest.webmanifest', 'css/app.css', 'js/app.js', 'js/dados.js', 'js/ui.js',
   'img/bg.jpg', 'img/dragon.jpg', 'img/enso.jpg', 'img/torii.jpg',
   'icons/favicon.svg', 'icons/icon-192.png', 'icons/icon-512.png'
 ];
