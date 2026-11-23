@@ -1130,3 +1130,17 @@ body.dlg-open { overflow: hidden; }
 .after__note { margin: 1.4rem 0 0; color: var(--muted); font-size: .92rem; }
 .after__note a { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
 .after__steps .step p strong { color: #fff; }
+
+/* ---------- botão "Acesso ao aluno" (canto superior direito) ---------- */
+.nav__links { margin-left: auto; }
+.nav__aluno { margin-left: 1.5rem; white-space: nowrap; }
+.nav__aluno .i { color: var(--red); }
+.nav__aluno-short { display: none; }
+@media (min-width: 901px) and (max-width: 1120px) { .nav__aluno { margin-left: 1rem; padding: .6em .9em; } }
+@media (max-width: 900px) {
+  .nav__aluno { margin-left: auto; margin-right: 6px; padding: .55em .95em; font-size: .74rem; }
+}
+@media (max-width: 379px) {
+  .nav__aluno-full { display: none; }
+  .nav__aluno-short { display: inline; }
+}
