@@ -195,7 +195,8 @@ function criarDemo() {
       d.treino_itens = d.treino_itens.filter((i) => i.treino_id !== t.id);
       itens.forEach((i, n) => d.treino_itens.push({
         id: novoId(), treino_id: t.id, exercicio: i.exercicio, video_url: i.video_url || '', series: i.series || '',
-        repeticoes: i.repeticoes || '', carga: i.carga || '', descanso: i.descanso || '', observacao: i.observacao || '', ordem: n
+        repeticoes: i.repeticoes || '', carga: i.carga || '', descanso: i.descanso || '', observacao: i.observacao || '', ordem: n,
+        blocos: Array.isArray(i.blocos) && i.blocos.length ? i.blocos.map((b) => ({ ...b })) : null
       }));
       gravar(d);
       return t;
@@ -347,7 +348,8 @@ function criarSupabase() {
         await r(sb.from('treino_itens').insert(itens.map((i, n) => ({
           treino_id: t.id, exercicio: i.exercicio, video_url: i.video_url || null, series: i.series || null,
           repeticoes: i.repeticoes || null, carga: i.carga || null, descanso: i.descanso || null,
-          observacao: i.observacao || null, ordem: n
+          observacao: i.observacao || null, ordem: n,
+          blocos: Array.isArray(i.blocos) && i.blocos.length ? i.blocos : null
         }))));
       }
       return t;
@@ -398,3 +400,10 @@ function criarSupabase() {
 }
 
 export const dados = MODO_DEMO ? criarDemo() : criarSupabase();
+
+// Linhas de séries de um exercício (ex.: 1x20 aquecimento + 3x8-10 força).
+// Exercícios antigos, sem linhas, viram uma linha só com os campos de sempre.
+export function blocosDe(it) {
+  if (Array.isArray(it.blocos) && it.blocos.length) return it.blocos;
+  return [{ tipo: '', series: it.series || '', repeticoes: it.repeticoes || '', carga: it.carga || '', descanso: it.descanso || '' }];
+}

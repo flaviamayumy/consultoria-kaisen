@@ -1,5 +1,5 @@
 // KAISEN · Área do aluno — login, área da treinadora e as abas do aluno.
-import { dados, MODO_DEMO, hojeISO, traduzirErro } from './dados.js';
+import { dados, MODO_DEMO, hojeISO, traduzirErro, blocosDe } from './dados.js';
 import {
   h, limpar, icone, aviso, confirmar, acao, campo, dataBR, videoYoutube, idYoutube, nomeExibicao, vazio
 } from './ui.js';
@@ -386,7 +386,7 @@ async function abaTreinos(el, aluno, souT) {
         h('div', null, h('strong', null, t.nome), h('small', null, `${t.itens.length} exercício(s)`)),
         h('a', { class: 'btn pequeno', href: `#/aluno/${aluno.id}/treino/${t.id}` }, icone('edit', 16), ' Editar')),
       t.itens.length ? h('ol', { class: 'mini-lista' }, t.itens.map((i) =>
-        h('li', null, i.exercicio, h('span', { class: 'muted' }, ` ${i.series || '-'}x${i.repeticoes || '-'}`)))) : null,
+        h('li', null, i.exercicio, h('span', { class: 'muted' }, ' ' + resumoSeries(i))))) : null,
       h('div', { class: 'linha-botoes fim' },
         h('button', { class: 'btn texto', type: 'button', onclick: () => { painelCopia.hidden = !painelCopia.hidden; } }, 'Copiar'),
         h('button', { class: 'btn texto', type: 'button', onclick: (e) => acao(e.currentTarget, async () => {
@@ -420,7 +420,11 @@ async function telaEditorTreino(alunoId, treinoId) {
   const obs = h('textarea', { rows: 2, placeholder: 'Orientações gerais (aquecimento, intensidade…)' }, treino ? (treino.observacoes || '') : '');
   const itens = treino ? treino.itens.map((i) => ({ ...i })) : [];
   const caixaItens = h('div', { class: 'itens' });
-  const vazioItem = () => ({ exercicio: '', video_url: '', series: '3', repeticoes: '10-12', carga: '', descanso: '60', observacao: '' });
+  const novaLinha = (tipo = '') => ({ tipo, series: '3', repeticoes: '10-12', carga: '', descanso: '60' });
+  const vazioItem = () => ({ exercicio: '', video_url: '', observacao: '', blocos: [novaLinha()] });
+  itens.forEach((i) => { i.blocos = blocosDe(i).map((b) => ({ ...b })); });
+  const tipos = h('datalist', { id: 'tipos-serie' },
+    ['Aquecimento', 'Reconhecimento', 'Força', 'Válida', 'Hipertrofia', 'Drop-set', 'Rest-pause', 'Back-off', 'Falha', 'Isometria'].map((t) => h('option', { value: t })));
   if (!itens.length) itens.push(vazioItem());
 
   const desenhar = () => {
@@ -442,16 +446,32 @@ async function telaEditorTreino(alunoId, treinoId) {
             h('button', { class: 'btn-icone', type: 'button', 'aria-label': 'Descer', disabled: n === itens.length - 1, onclick: () => { [itens[n + 1], itens[n]] = [itens[n], itens[n + 1]]; desenhar(); } }, icone('down', 18)),
             h('button', { class: 'btn-icone perigo', type: 'button', 'aria-label': 'Remover exercício', onclick: () => { itens.splice(n, 1); desenhar(); } }, icone('trash', 18)))),
         campo('Exercício', exercicio),
-        h('div', { class: 'grade-campos' },
-          entrada('series', 'Séries', '3'), entrada('repeticoes', 'Repetições', '10-12'),
-          entrada('carga', 'Carga', '20 kg'), entrada('descanso', 'Descanso (s)', '60', { inputmode: 'numeric' })),
+        h('div', { class: 'blocos' },
+          it.blocos.map((b, k) => {
+            const ent = (c, rot, ph, extra = {}) => campo(rot, h('input', { value: b[c] || '', placeholder: ph, ...extra, oninput: (e) => { b[c] = e.target.value; } }));
+            return h('div', { class: 'bloco' },
+              h('div', { class: 'bloco-topo' },
+                h('span', { class: 'bloco-num' }, `${k + 1}.`),
+                h('input', { class: 'bloco-tipo', value: b.tipo || '', list: 'tipos-serie', placeholder: 'Tipo (ex.: Aquecimento, Força)',
+                  'aria-label': 'Tipo da série', oninput: (e) => { b.tipo = e.target.value; } }),
+                h('button', { class: 'btn-icone perigo', type: 'button', 'aria-label': 'Remover esta linha de séries', disabled: it.blocos.length === 1,
+                  onclick: () => { it.blocos.splice(k, 1); desenhar(); } }, icone('trash', 16))),
+              h('div', { class: 'grade-campos grade-4' },
+                ent('series', 'Séries', '3', { inputmode: 'numeric' }), ent('repeticoes', 'Repetições', '10-12'),
+                ent('carga', 'Carga', '20 kg'), ent('descanso', 'Descanso (s)', '60', { inputmode: 'numeric' })));
+          }),
+          h('button', { class: 'btn pequeno secundario', type: 'button', onclick: () => {
+            const ult = it.blocos[it.blocos.length - 1];
+            it.blocos.push(it.blocos.length === 1 && /aquec|reconh/i.test(ult.tipo || '') ? novaLinha('Força') : { ...ult });
+            desenhar();
+          } }, icone('plus', 16), ' Adicionar série')),
         campo('Vídeo do YouTube', video, 'Opcional. Suba como "Não listado" e cole o link.'),
         entrada('observacao', 'Observação', 'ex.: cadência 3-1-1'));
     }));
   };
 
   const salvar = h('button', { class: 'btn largo', type: 'submit' }, 'Salvar treino');
-  limpar(main, lista, h('form', { class: 'form', onsubmit: (e) => {
+  limpar(main, lista, tipos, h('form', { class: 'form', onsubmit: (e) => {
     e.preventDefault();
     const validos = itens.filter((i) => (i.exercicio || '').trim());
     if (!nome.value.trim()) return aviso('Dê um nome ao treino.', 'erro');
@@ -460,7 +480,13 @@ async function telaEditorTreino(alunoId, treinoId) {
     if (linkRuim) return aviso(`O link de vídeo de "${linkRuim.exercicio}" não é do YouTube.`, 'erro');
     acao(salvar, async () => {
       await dados.salvarTreino({ id: treino ? treino.id : null, aluno_id: alunoId, nome: nome.value.trim(), observacoes: obs.value.trim() },
-        validos.map((i) => ({ ...i, exercicio: i.exercicio.trim(), video_url: (i.video_url || '').trim() })));
+        validos.map((i) => {
+          const blocos = i.blocos.map((b) => ({ tipo: (b.tipo || '').trim(), series: (b.series || '').trim(), repeticoes: (b.repeticoes || '').trim(),
+            carga: (b.carga || '').trim(), descanso: (b.descanso || '').trim() })).filter((b) => b.tipo || b.series || b.repeticoes || b.carga || b.descanso);
+          const p = blocos.find((b) => !/aquec|reconh/i.test(b.tipo)) || blocos[0] || {};
+          return { ...i, exercicio: i.exercicio.trim(), video_url: (i.video_url || '').trim(), blocos,
+            series: p.series || '', repeticoes: p.repeticoes || '', carga: p.carga || '', descanso: p.descanso || '' };
+        }));
       aviso('Treino salvo!');
       location.hash = `#/aluno/${alunoId}/treinos`;
     });
@@ -495,16 +521,21 @@ async function telaTreinoDoAluno(tid) {
     const cartao = h('div', { class: 'cartao exec' });
     const check = h('input', { type: 'checkbox', 'aria-label': `Marcar ${it.exercicio} como feito`,
       onchange: (e) => { if (e.target.checked) feitos.add(n); else feitos.delete(n); cartao.classList.toggle('feito', e.target.checked); atualizar(); } });
-    const descanso = parseInt(it.descanso, 10);
+    const linhas = blocosDe(it);
     limpar(cartao,
       h('div', { class: 'exec-topo' },
         h('span', { class: 'num' }, n + 1),
         h('div', { class: 'exec-nome' }, h('strong', null, it.exercicio)),
         h('label', { class: 'check-grande' }, check, h('span', null, icone('check', 20)))),
-      h('div', { class: 'prescricao' },
-        it.series || it.repeticoes ? h('span', null, h('b', null, `${it.series || '-'} x ${it.repeticoes || '-'}`)) : null,
-        it.carga ? h('span', null, 'Carga: ', h('b', null, it.carga)) : null,
-        it.descanso ? h('span', null, 'Descanso: ', h('b', null, `${it.descanso}s`)) : null),
+      h('div', { class: 'series-lista' }, linhas.map((b) => {
+        const d = parseInt(b.descanso, 10);
+        return h('div', { class: 'serie-linha' + (/aquec|reconh/i.test(b.tipo || '') ? ' leve' : '') },
+          b.tipo ? h('span', { class: 'serie-tipo' }, b.tipo) : null,
+          h('div', { class: 'prescricao' },
+            b.series || b.repeticoes ? h('span', null, h('b', null, `${b.series || '-'} x ${b.repeticoes || '-'}`)) : null,
+            b.carga ? h('span', null, 'Carga: ', h('b', null, b.carga)) : null,
+            d > 0 ? h('button', { class: 'btn-desc', type: 'button', 'aria-label': `Cronômetro de descanso de ${d} segundos`, onclick: () => cronometro(d) }, icone('timer', 14), ` ${d}s`) : null));
+      })),
       it.observacao ? h('p', { class: 'obs' }, it.observacao) : null,
       area,
       h('div', { class: 'linha-botoes' },
@@ -512,8 +543,7 @@ async function telaTreinoDoAluno(tid) {
           const b = e.currentTarget;
           if (area.firstChild) { limpar(area); b.lastChild.textContent = ' Ver vídeo'; }
           else { limpar(area, videoYoutube(it.video_url)); b.lastChild.textContent = ' Fechar vídeo'; }
-        } }, icone('play', 16), h('span', null, ' Ver vídeo')) : null,
-        descanso > 0 ? h('button', { class: 'btn pequeno secundario', type: 'button', onclick: () => cronometro(descanso) }, icone('timer', 16), ` Descanso ${descanso}s`) : null));
+        } }, icone('play', 16), h('span', null, ' Ver vídeo')) : null));
     return cartao;
   });
 
@@ -830,3 +860,7 @@ if ('serviceWorker' in navigator && location.protocol === 'https:') {
   window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
 }
 iniciar();
+
+function resumoSeries(it) {
+  return blocosDe(it).map((b) => `${b.series || '-'}x${b.repeticoes || '-'}`).join(' + ');
+}
