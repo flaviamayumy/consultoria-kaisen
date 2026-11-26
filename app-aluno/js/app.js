@@ -434,14 +434,24 @@ async function telaEditorTreino(alunoId, treinoId) {
     const inp = (c, ph, rot, extra = {}) => h('input', { value: b[c] || '', placeholder: ph, 'aria-label': `${rot} da linha ${k + 1}`, ...extra,
       oninput: (e) => { b[c] = e.target.value; } });
     const alca = h('button', { class: 'alca', type: 'button', 'aria-label': 'Arrastar para reordenar' }, icone('menu', 18));
-    const linha = h('div', { class: 'linha-serie', 'data-k': k },
+    const ehTexto = typeof b.nota === 'string';
+    const linha = ehTexto
+      ? h('div', { class: 'linha-serie linha-texto', 'data-k': k },
+        alca,
+        h('label', { class: 'cel' }, h('span', null, 'Texto'),
+          h('textarea', { rows: 1, placeholder: 'ex.: na última série, drop-set até a falha', 'aria-label': `Texto da linha ${k + 1}`,
+            oninput: (e) => { b.nota = e.target.value; ajustarAltura(e.target); } }, b.nota)),
+        h('button', { class: 'btn-icone perigo', type: 'button', 'aria-label': `Remover linha ${k + 1}`,
+          onclick: () => { it.blocos.splice(k, 1); desenhar(); } }, icone('trash', 16)))
+      : h('div', { class: 'linha-serie', 'data-k': k },
       alca,
       h('label', { class: 'cel' }, h('span', null, 'Série/rep'), serieRep),
       h('label', { class: 'cel' }, h('span', null, 'Carga'), inp('carga', '0', 'Carga')),
       h('label', { class: 'cel' }, h('span', null, 'Intervalo'), inp('descanso', '60s', 'Intervalo')),
-      h('button', { class: 'btn-icone perigo', type: 'button', 'aria-label': `Remover linha ${k + 1}`, disabled: it.blocos.length === 1,
+      h('button', { class: 'btn-icone perigo', type: 'button', 'aria-label': `Remover linha ${k + 1}`, disabled: it.blocos.filter((x) => typeof x.nota !== 'string').length === 1,
         onclick: () => { it.blocos.splice(k, 1); desenhar(); } }, icone('trash', 16)));
-    b.tipo && linha.querySelector('.cel span').append(h('em', null, ` · ${b.tipo}`));
+    if (!ehTexto && b.tipo) linha.querySelector('.cel span').append(h('em', null, ` · ${b.tipo}`));
+    if (ehTexto) requestAnimationFrame(() => ajustarAltura(linha.querySelector('textarea')));
     // arrastar para reordenar (mouse e toque)
     alca.addEventListener('pointerdown', (ev) => {
       ev.preventDefault();
@@ -504,10 +514,15 @@ async function telaEditorTreino(alunoId, treinoId) {
           oninput: (e) => { it.observacao = e.target.value; } }, it.observacao || '')),
         h('div', { class: 'botoes-serie' },
           h('button', { class: 'btn', type: 'button', onclick: () => {
-            const ult = it.blocos[it.blocos.length - 1];
+            const ult = [...it.blocos].reverse().find((x) => typeof x.nota !== 'string');
             it.blocos.push(ult ? { ...ult, tipo: '' } : novaLinha());
             desenhar();
           } }, 'Adicionar série'),
+          h('button', { class: 'btn secundario', type: 'button', onclick: () => {
+            it.blocos.push({ nota: '' });
+            desenhar();
+            requestAnimationFrame(() => [...caixaItens.children][n]?.querySelectorAll('.linha-texto textarea')[it.blocos.filter((x) => typeof x.nota === 'string').length - 1]?.focus());
+          } }, 'Adicionar texto'),
           h('button', { class: 'btn secundario', type: 'button', onclick: async () => {
             const outros = itens.filter((x) => x !== it);
             if (!outros.length) return aviso('Adicione outro exercício para replicar as séries.', 'erro');
@@ -533,9 +548,10 @@ async function telaEditorTreino(alunoId, treinoId) {
     acao(salvar, async () => {
       await dados.salvarTreino({ id: treino ? treino.id : null, aluno_id: alunoId, nome: nome.value.trim(), observacoes: obs.value.trim() },
         validos.map((i) => {
-          const blocos = i.blocos.map((b) => ({ tipo: (b.tipo || '').trim(), series: (b.series || '').trim(), repeticoes: (b.repeticoes || '').trim(),
-            carga: (b.carga || '').trim(), descanso: (b.descanso || '').trim() })).filter((b) => b.tipo || b.series || b.repeticoes || b.carga || b.descanso);
-          const p = blocos.find((b) => !/aquec|reconh/i.test(b.tipo)) || blocos[0] || {};
+          const blocos = i.blocos.map((b) => (typeof b.nota === 'string' ? { nota: b.nota.trim() } : { tipo: (b.tipo || '').trim(), series: (b.series || '').trim(), repeticoes: (b.repeticoes || '').trim(),
+            carga: (b.carga || '').trim(), descanso: (b.descanso || '').trim() })).filter((b) => b.nota || b.tipo || b.series || b.repeticoes || b.carga || b.descanso);
+          const serieRows = blocos.filter((b) => !('nota' in b));
+          const p = serieRows.find((b) => !/aquec|reconh/i.test(b.tipo)) || serieRows[0] || {};
           return { ...i, exercicio: i.exercicio.trim(), video_url: (i.video_url || '').trim(), blocos,
             series: p.series || '', repeticoes: p.repeticoes || '', carga: p.carga || '', descanso: p.descanso || '' };
         }));
@@ -580,6 +596,7 @@ async function telaTreinoDoAluno(tid) {
         h('div', { class: 'exec-nome' }, h('strong', null, it.exercicio)),
         h('label', { class: 'check-grande' }, check, h('span', null, icone('check', 20)))),
       h('div', { class: 'series-lista' }, linhas.map((b) => {
+        if (typeof b.nota === 'string') return h('p', { class: 'serie-nota' }, b.nota);
         const d = segundos(b.descanso);
         return h('div', { class: 'serie-linha' + (/aquec|reconh/i.test(b.tipo || '') ? ' leve' : '') },
           b.tipo ? h('span', { class: 'serie-tipo' }, b.tipo) : null,
@@ -914,7 +931,7 @@ if ('serviceWorker' in navigator && location.protocol === 'https:') {
 iniciar();
 
 function resumoSeries(it) {
-  return blocosDe(it).map((b) => `${b.series || '-'}x${b.repeticoes || '-'}`).join(' + ');
+  return blocosDe(it).filter((b) => typeof b.nota !== 'string').map((b) => `${b.series || '-'}x${b.repeticoes || '-'}`).join(' + ');
 }
 
 function juntarSerieRep(b) {
@@ -934,4 +951,10 @@ function segundos(txt) {
   let m = t.match(/^(\d+):(\d{1,2})$/); if (m) return +m[1] * 60 + +m[2];
   m = t.match(/^(\d+(?:[.,]\d+)?)\s*(m|min|mins|minuto|minutos)$/); if (m) return Math.round(parseFloat(m[1].replace(',', '.')) * 60);
   m = t.match(/^(\d+)/); return m ? +m[1] : 0;
+}
+
+function ajustarAltura(t) {
+  if (!t) return;
+  t.style.height = 'auto';
+  t.style.height = `${t.scrollHeight + 2}px`;
 }
