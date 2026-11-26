@@ -58,7 +58,8 @@ const ICONES = {
   calendar: 'M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2z',
   camera: 'M3 8a2 2 0 012-2h2l2-3h6l2 3h2a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2zM12 17a4 4 0 100-8 4 4 0 000 8',
   fire: 'M12 22c4 0 7-3 7-7 0-5-5-7-5-12-3 2-6 6-6 10-1-1-2-2-2-4-2 2-1 5-1 6 0 4 3 7 7 7z',
-  compare: 'M12 3v18M4 6h5v12H4zM15 6h5v12h-5z'
+  compare: 'M12 3v18M4 6h5v12H4zM15 6h5v12h-5z',
+  menu: 'M4 7h16M4 12h16M4 17h16'
 };
 export function icone(nome, tam = 22) {
   const ns = 'http://www.w3.org/2000/svg';

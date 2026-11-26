@@ -420,12 +420,55 @@ async function telaEditorTreino(alunoId, treinoId) {
   const obs = h('textarea', { rows: 2, placeholder: 'Orientações gerais (aquecimento, intensidade…)' }, treino ? (treino.observacoes || '') : '');
   const itens = treino ? treino.itens.map((i) => ({ ...i })) : [];
   const caixaItens = h('div', { class: 'itens' });
-  const novaLinha = (tipo = '') => ({ tipo, series: '3', repeticoes: '10-12', carga: '', descanso: '60' });
+  const novaLinha = (tipo = '') => ({ tipo, series: '3', repeticoes: '10-12', carga: '', descanso: '60s' });
   const vazioItem = () => ({ exercicio: '', video_url: '', observacao: '', blocos: [novaLinha()] });
   itens.forEach((i) => { i.blocos = blocosDe(i).map((b) => ({ ...b })); });
   const tipos = h('datalist', { id: 'tipos-serie' },
     ['Aquecimento', 'Reconhecimento', 'Força', 'Válida', 'Hipertrofia', 'Drop-set', 'Rest-pause', 'Back-off', 'Falha', 'Isometria'].map((t) => h('option', { value: t })));
   if (!itens.length) itens.push(vazioItem());
+
+  // Uma linha de série no estilo do MFit: [≡] Série/rep | Carga | Intervalo [lixeira]
+  const linhaSerie = (it, b, k) => {
+    const serieRep = h('input', { value: juntarSerieRep(b), placeholder: '3/ 8-12', 'aria-label': `Série e repetições da linha ${k + 1}`,
+      oninput: (e) => { Object.assign(b, separarSerieRep(e.target.value)); } });
+    const inp = (c, ph, rot, extra = {}) => h('input', { value: b[c] || '', placeholder: ph, 'aria-label': `${rot} da linha ${k + 1}`, ...extra,
+      oninput: (e) => { b[c] = e.target.value; } });
+    const alca = h('button', { class: 'alca', type: 'button', 'aria-label': 'Arrastar para reordenar' }, icone('menu', 18));
+    const linha = h('div', { class: 'linha-serie', 'data-k': k },
+      alca,
+      h('label', { class: 'cel' }, h('span', null, 'Série/rep'), serieRep),
+      h('label', { class: 'cel' }, h('span', null, 'Carga'), inp('carga', '0', 'Carga')),
+      h('label', { class: 'cel' }, h('span', null, 'Intervalo'), inp('descanso', '60s', 'Intervalo')),
+      h('button', { class: 'btn-icone perigo', type: 'button', 'aria-label': `Remover linha ${k + 1}`, disabled: it.blocos.length === 1,
+        onclick: () => { it.blocos.splice(k, 1); desenhar(); } }, icone('trash', 16)));
+    b.tipo && linha.querySelector('.cel span').append(h('em', null, ` · ${b.tipo}`));
+    // arrastar para reordenar (mouse e toque)
+    alca.addEventListener('pointerdown', (ev) => {
+      ev.preventDefault();
+      const caixa = linha.parentElement;
+      linha.classList.add('arrastando');
+      const mover = (e) => {
+        const alvo = [...caixa.children].find((el) => el !== linha && (() => { const r = el.getBoundingClientRect(); return e.clientY > r.top && e.clientY < r.bottom; })());
+        if (!alvo) return;
+        const r = alvo.getBoundingClientRect();
+        caixa.insertBefore(linha, e.clientY < r.top + r.height / 2 ? alvo : alvo.nextSibling);
+      };
+      const soltar = () => {
+        window.removeEventListener('pointermove', mover);
+        window.removeEventListener('pointerup', soltar);
+        window.removeEventListener('pointercancel', soltar);
+        linha.classList.remove('arrastando');
+        const ordem = [...caixa.children].map((el) => Number(el.dataset.k));
+        it.blocos = ordem.map((x) => it.blocos[x]);
+        desenhar();
+      };
+      window.addEventListener('pointermove', mover);
+      window.addEventListener('pointerup', soltar);
+      window.addEventListener('pointercancel', soltar);
+    });
+    return linha;
+  };
+
 
   const desenhar = () => {
     limpar(caixaItens, itens.map((it, n) => {
@@ -438,40 +481,49 @@ async function telaEditorTreino(alunoId, treinoId) {
         } });
       const video = h('input', { type: 'url', inputmode: 'url', value: it.video_url || '', placeholder: 'https://youtu.be/…',
         oninput: (e) => { it.video_url = e.target.value; } });
+      const vid = idYoutube(it.video_url || '');
+      const midia = h('div', { class: 'item-video' });
+      if (vid) {
+        limpar(midia, h('button', { class: 'thumb', type: 'button', 'aria-label': 'Ver vídeo', onclick: () => limpar(midia, videoYoutube(it.video_url)) },
+          h('img', { src: `https://i.ytimg.com/vi/${vid}/hqdefault.jpg`, alt: '', loading: 'lazy' }),
+          h('span', { class: 'thumb-play' }, icone('play', 26))));
+      }
+      video.onchange = () => desenhar();
+      const linhas = h('div', { class: 'linhas-serie' }, it.blocos.map((b, k) => linhaSerie(it, b, k)));
       return h('div', { class: 'cartao item' },
         h('div', { class: 'item-topo' },
           h('span', { class: 'num' }, n + 1),
+          h('div', { class: 'item-nome' }, exercicio),
           h('div', { class: 'item-acoes' },
-            h('button', { class: 'btn-icone', type: 'button', 'aria-label': 'Subir', disabled: n === 0, onclick: () => { [itens[n - 1], itens[n]] = [itens[n], itens[n - 1]]; desenhar(); } }, icone('up', 18)),
-            h('button', { class: 'btn-icone', type: 'button', 'aria-label': 'Descer', disabled: n === itens.length - 1, onclick: () => { [itens[n + 1], itens[n]] = [itens[n], itens[n + 1]]; desenhar(); } }, icone('down', 18)),
+            h('button', { class: 'btn-icone', type: 'button', 'aria-label': 'Subir exercício', disabled: n === 0, onclick: () => { [itens[n - 1], itens[n]] = [itens[n], itens[n - 1]]; desenhar(); } }, icone('up', 18)),
+            h('button', { class: 'btn-icone', type: 'button', 'aria-label': 'Descer exercício', disabled: n === itens.length - 1, onclick: () => { [itens[n + 1], itens[n]] = [itens[n], itens[n + 1]]; desenhar(); } }, icone('down', 18)),
             h('button', { class: 'btn-icone perigo', type: 'button', 'aria-label': 'Remover exercício', onclick: () => { itens.splice(n, 1); desenhar(); } }, icone('trash', 18)))),
-        campo('Exercício', exercicio),
-        h('div', { class: 'blocos' },
-          it.blocos.map((b, k) => {
-            const ent = (c, rot, ph, extra = {}) => campo(rot, h('input', { value: b[c] || '', placeholder: ph, ...extra, oninput: (e) => { b[c] = e.target.value; } }));
-            return h('div', { class: 'bloco' },
-              h('div', { class: 'bloco-topo' },
-                h('span', { class: 'bloco-num' }, `${k + 1}.`),
-                h('input', { class: 'bloco-tipo', value: b.tipo || '', list: 'tipos-serie', placeholder: 'Tipo (ex.: Aquecimento, Força)',
-                  'aria-label': 'Tipo da série', oninput: (e) => { b.tipo = e.target.value; } }),
-                h('button', { class: 'btn-icone perigo', type: 'button', 'aria-label': 'Remover esta linha de séries', disabled: it.blocos.length === 1,
-                  onclick: () => { it.blocos.splice(k, 1); desenhar(); } }, icone('trash', 16))),
-              h('div', { class: 'grade-campos grade-4' },
-                ent('series', 'Séries', '3', { inputmode: 'numeric' }), ent('repeticoes', 'Repetições', '10-12'),
-                ent('carga', 'Carga', '20 kg'), ent('descanso', 'Descanso (s)', '60', { inputmode: 'numeric' })));
-          }),
-          h('button', { class: 'btn pequeno secundario', type: 'button', onclick: () => {
+        midia,
+        linhas,
+        campo('Observações', h('textarea', { rows: 2, placeholder: 'ex.: Progredir em todas as séries e se manter dentro das reps programadas.',
+          oninput: (e) => { it.observacao = e.target.value; } }, it.observacao || '')),
+        h('div', { class: 'botoes-serie' },
+          h('button', { class: 'btn', type: 'button', onclick: () => {
             const ult = it.blocos[it.blocos.length - 1];
-            it.blocos.push(it.blocos.length === 1 && /aquec|reconh/i.test(ult.tipo || '') ? novaLinha('Força') : { ...ult });
+            it.blocos.push(ult ? { ...ult, tipo: '' } : novaLinha());
             desenhar();
-          } }, icone('plus', 16), ' Adicionar série')),
-        campo('Vídeo do YouTube', video, 'Opcional. Suba como "Não listado" e cole o link.'),
-        entrada('observacao', 'Observação', 'ex.: cadência 3-1-1'));
+          } }, 'Adicionar série'),
+          h('button', { class: 'btn secundario', type: 'button', onclick: async () => {
+            const outros = itens.filter((x) => x !== it);
+            if (!outros.length) return aviso('Adicione outro exercício para replicar as séries.', 'erro');
+            if (!(await confirmar(`Copiar as séries de "${it.exercicio || 'este exercício'}" (${resumoSeries(it)}) para os outros ${outros.length} exercício(s) deste treino?`, 'Replicar'))) return;
+            outros.forEach((x) => { x.blocos = it.blocos.map((b) => ({ ...b })); });
+            desenhar();
+            aviso('Séries replicadas!');
+          } }, 'Replicar séries')),
+        h('details', { class: 'link-video', open: !vid && !!it.video_url },
+          h('summary', null, vid ? 'Trocar vídeo do YouTube' : 'Adicionar vídeo do YouTube'),
+          campo('Link do vídeo', video, 'Suba como "Não listado" no YouTube e cole o link aqui.')));
     }));
   };
 
   const salvar = h('button', { class: 'btn largo', type: 'submit' }, 'Salvar treino');
-  limpar(main, lista, tipos, h('form', { class: 'form', onsubmit: (e) => {
+  limpar(main, lista, h('form', { class: 'form', onsubmit: (e) => {
     e.preventDefault();
     const validos = itens.filter((i) => (i.exercicio || '').trim());
     if (!nome.value.trim()) return aviso('Dê um nome ao treino.', 'erro');
@@ -528,7 +580,7 @@ async function telaTreinoDoAluno(tid) {
         h('div', { class: 'exec-nome' }, h('strong', null, it.exercicio)),
         h('label', { class: 'check-grande' }, check, h('span', null, icone('check', 20)))),
       h('div', { class: 'series-lista' }, linhas.map((b) => {
-        const d = parseInt(b.descanso, 10);
+        const d = segundos(b.descanso);
         return h('div', { class: 'serie-linha' + (/aquec|reconh/i.test(b.tipo || '') ? ' leve' : '') },
           b.tipo ? h('span', { class: 'serie-tipo' }, b.tipo) : null,
           h('div', { class: 'prescricao' },
@@ -863,4 +915,23 @@ iniciar();
 
 function resumoSeries(it) {
   return blocosDe(it).map((b) => `${b.series || '-'}x${b.repeticoes || '-'}`).join(' + ');
+}
+
+function juntarSerieRep(b) {
+  if (b.series && b.repeticoes) return `${b.series}/ ${b.repeticoes}`;
+  return b.series || b.repeticoes || '';
+}
+function separarSerieRep(txt) {
+  const m = String(txt).match(/^\s*(\d+)\s*[\/xX×]\s*(.*?)\s*$/);
+  if (m) return { series: m[1], repeticoes: m[2] };
+  const t = String(txt).trim();
+  return /^\d+$/.test(t) ? { series: t, repeticoes: '' } : { series: '', repeticoes: t };
+}
+// "60", "60s", "90 seg", "1min", "1:30", "2 min" -> segundos
+function segundos(txt) {
+  const t = String(txt || '').toLowerCase().trim();
+  if (!t) return 0;
+  let m = t.match(/^(\d+):(\d{1,2})$/); if (m) return +m[1] * 60 + +m[2];
+  m = t.match(/^(\d+(?:[.,]\d+)?)\s*(m|min|mins|minuto|minutos)$/); if (m) return Math.round(parseFloat(m[1].replace(',', '.')) * 60);
+  m = t.match(/^(\d+)/); return m ? +m[1] : 0;
 }
